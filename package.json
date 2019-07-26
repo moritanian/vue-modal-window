@@ -1,0 +1,40 @@
+{
+  "name": "vue-modal-window",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Moritanian <pickit2express@gmail.com>",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
+  },
+  "main": "dist/vue-modal-window.ssr.js",
+  "module": "dist/vue-modal-window.esm.js",
+  "unpkg": "dist/vue-modal-window.min.js",
+  "files": [
+    "dist/*",
+    "src/**/*.vue"
+  ],
+  "dependencies": {
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "minimist": "^1.2.0",
+    "rollup": "^1.12.1",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-vue": "^5.0.0",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "keywords": [
+    "modal",
+    "js",
+    "vue"
+  ],
+  "license": "MIT"
+}
