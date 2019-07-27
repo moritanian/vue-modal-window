@@ -5,7 +5,7 @@ vue-modal-window
 
 #### OS like modal window component for vuejs ####
 
-<a href="https://github.com/moritanian/vue-modal-window"><img src="https://moritanian.github.io/vue-modal-window/static/sample.png"/></a>
+<a href="https://moritanian.github.io/vue-modal-window/demo/dist/"><img src="https://moritanian.github.io/vue-modal-window/static/demo.gif"/></a>
 
 
 <p align="center"><a href="https://moritanian.github.io/vue-modal-window/demo/dist/">DEMO</a></p>
@@ -42,3 +42,4 @@ export default {
   components: {VueModalWindow}
 };
 </script>
+```
