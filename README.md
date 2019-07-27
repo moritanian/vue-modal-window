@@ -34,7 +34,7 @@ vue-modal-window
 ## Usage
 ```demo.vue
 <template>
-  <vue-modal-window :visibleDemo1.sync="visibleDemo1">This is content</vue-modal-window>
+  <vue-modal-window :visible.sync="visibleDemo1">This is content</vue-modal-window>
 </template>
 <script>
 import VueModalWindow  from 'vue-modal-window';
