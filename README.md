@@ -16,13 +16,15 @@ vue-modal-window
 | ------  | ---- | --- | ------ |
 | id   | String | uuid | id attribute of the dom element which is used for identify the modal window.|
 | contentUrl | String | '' | Url of iframe of the content. When this property is set, iframe is rendered as the content of the window. |
-| visible | Number | 200 | Size of the clock in pixels. |
+| visible | Number | 200 | Set true to show the modal window. |
 | enableAnotherWindow | Boolean | false | Set true to show real child window (window.open) when maximize button is clicked.  This property is enabled when contentUrl property is set. |
-| title | String | '' | Background color of the clock. |
-| width | String | 300 | Initial width of the window. |
-| height | String | 300 | Initial height of the window. |
-| minWidth | String | 60 | Minimum width of the window. |
-| minHeight | String | 20 | Minimum height of the window. |
+| title | String | '' | Title text of the modal window. |
+| width | String | 300 | Initial width of the modal window. |
+| height | String | 300 | Initial height of the modal window. |
+| top | String | 300 | Initial top of the modal window. |
+| left | String | 300 | Initial left of the modal window. |
+| minWidth | String | 60 | Minimum width of the modal window. |
+| minHeight | String | 20 | Minimum height of the modal window. |
 | resizable | Boolean | true | Set true to enable resizing. |
 | draggable | Boolean | true | Set true to enable dragging. |
 | recordRect | Boolean | true | Set true to record the rect of the window and load it. |

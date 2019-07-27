@@ -7,7 +7,7 @@
           <div class="head-button minimize-button" @click.stop.prevent="onClickMinimizeButton">
             <div></div>
           </div>
-          <div class="head-button maximize-button" @click.stop.prevent="onClickMaximizeButton">
+          <div class="head-button maximize-button" v-if="resizable" @click.stop.prevent="onClickMaximizeButton">
             <div></div>
           </div>
         </div>
@@ -16,24 +16,31 @@
         <slot></slot>
         <iframe v-if="contentUrl" :src="contentUrl" ref="iframe"></iframe>
       </div>
-      <div
-        class="resizable"
-        :class="name"
-        :key="name"
-        @mousedown="onResizableDown(name)"
-        v-for="name in [
-          'top-left', 'top-right', 'bottom-left', 'bottom-right',
-          'top', 'left', 'right', 'bottom'
-        ]"
-      ></div>
+      <div class="resizable-elements"
+          v-if="resizable"
+      >
+        <div
+          class="resizable"
+          :class="name"
+          :key="name"
+          @mousedown="onResizableDown(name)"
+          v-for="name in [
+            'top-left', 'top-right', 'bottom-left', 'bottom-right',
+            'top', 'left', 'right', 'bottom'
+          ]"
+        ></div>
+      </div>
     </div>
     <div class="cover" :class="activeResizableName" v-show="dragging || activeResizableName"></div>
   </div>
 </template>
 
 <script>
-import uuid from "uuid/v4";
-import Vue from "vue";
+//const uuidv4 = require('uuid/v4');
+// import uuidv4 from 'uuid/v4';
+import uuid from 'uuid';
+import { parse } from 'path';
+const uuidv4 = uuid.v4;
 
 let instanceOrderedList = [];
 const baseZIndex = 1000;
@@ -44,7 +51,9 @@ export default {
   props: {
     id: {
       type: String,
-      default: uuid()
+      default: function() {
+        return uuid();
+      }
     },
     contentUrl: {
       type: String
@@ -68,6 +77,14 @@ export default {
     height: {
       type: Number,
       default: 200
+    },
+    top: {
+      type: Number,
+      default: 20
+    },
+    left: {
+      type: Number,
+      default: 20
     },
     minWidth: {
       type: Number,
@@ -96,10 +113,10 @@ export default {
   },
   data() {
     let boundingClientRect = {
-      left: 0,
-      top: 0,
-      right: this.width,
-      bottom: this.height
+      left: parseInt(this.left),
+      top: parseInt(this.top),
+      right: parseInt(this.left) + parseInt(this.width),
+      bottom: parseInt(this.top) + parseInt(this.height)
     };
 
     if (this.recordRect || this.recordVisibility) {
@@ -135,8 +152,8 @@ export default {
     modalStyle() {
       if (this.maximized) {
         return {
-          width: document.body.clientWidth + "px",
-          height: document.body.clientHeight + "px",
+          width: window.innerWidth + "px",
+          height: window.innerHeight + "px",
           top: "0px",
           left: "0px",
           zIndex: this.zIndex
@@ -244,6 +261,7 @@ export default {
       return false;
     },
     onDraggableMove(event) {
+
       let width = this.rectWidth;
       let height = this.rectHeight;
       this.boundingClientRect.left =
@@ -260,7 +278,9 @@ export default {
       this.activeResizableName = name;
     },
     resize(resizableName, x, y) {
-      this.$refs.content.children[0].dispatchEvent(new Event("resize"));
+      if (this.$refs.content.children && this.$refs.content.children.length > 0) {
+        this.$refs.content.children[0].dispatchEvent(new Event("resize"));
+      }
       let operations = resizableName.split("-");
       if (operations.indexOf("left") !== -1) {
         this.boundingClientRect.left = Math.min(
@@ -292,11 +312,11 @@ export default {
       let height = this.rectHeight;
       rect.top = Math.min(
         Math.max(rect.top, 0),
-        document.body.clientHeight - this.minHeight
+        window.innerHeight - this.minHeight
       );
       rect.left = Math.min(
         Math.max(rect.left, this.minWidth - width),
-        document.body.clientWidth - this.minWidth
+        window.innerWidth - this.minWidth
       );
       rect.right = rect.left + width;
       rect.bottom = rect.top + height;
@@ -352,6 +372,9 @@ export default {
       }
     },
     maximize() {
+      if (!this.resizable) {
+        return;
+      }
       this.maximized = !this.maximized;
     }
   },
