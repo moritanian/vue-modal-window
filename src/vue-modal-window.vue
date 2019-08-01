@@ -36,10 +36,7 @@
 </template>
 
 <script>
-//const uuidv4 = require('uuid/v4');
-// import uuidv4 from 'uuid/v4';
 import uuid from 'uuid';
-import { parse } from 'path';
 const uuidv4 = uuid.v4;
 
 let instanceOrderedList = [];
@@ -278,9 +275,7 @@ export default {
       this.activeResizableName = name;
     },
     resize(resizableName, x, y) {
-      if (this.$refs.content.children && this.$refs.content.children.length > 0) {
-        this.$refs.content.children[0].dispatchEvent(new Event("resize"));
-      }
+      this.dispatchResizeEvent();
       let operations = resizableName.split("-");
       if (operations.indexOf("left") !== -1) {
         this.boundingClientRect.left = Math.min(
@@ -375,7 +370,16 @@ export default {
       if (!this.resizable) {
         return;
       }
+      this.dispatchResizeEvent();
       this.maximized = !this.maximized;
+    },
+    dispatchResizeEvent() {
+      if (!this.$refs.content.children || this.$refs.content.children.length === 0) {
+        return;
+      }
+      setTimeout(() => {
+        this.$refs.content.children[0].dispatchEvent(new Event("resize"));
+      }, 0);
     }
   },
   watch: {

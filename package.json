@@ -3,6 +3,11 @@
   "version": "1.0.2",
   "description": "",
   "author": "Moritanian <pickit2express@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moritanian/vue-modal-window.git"
+  },
+  "homepage": "https://github.com/moritanian/vue-modal-window",
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
